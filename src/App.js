@@ -1,11 +1,19 @@
+// src/App.js
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import CustomerPage from './pages/CustomerPage';
+
 function App() {
   return (
-    <div className="h-screen bg-yellow-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Tailwind is working!
-      </h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/customer" element={<CustomerPage />} />
+      </Routes>
+    </Router>
   );
 }
 
-export default App;
+export default App; // ✅ This must be present
