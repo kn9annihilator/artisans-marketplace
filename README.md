@@ -1,8 +1,8 @@
-![GitHub repo size](https://img.shields.io/github/repo-size/YOUR-USERNAME/artisans-marketplace)
-![GitHub stars](https://img.shields.io/github/stars/YOUR-USERNAME/artisans-marketplace?style=social)
-![Last Commit](https://img.shields.io/github/last-commit/YOUR-USERNAME/artisans-marketplace)
-![Issues](https://img.shields.io/github/issues/YOUR-USERNAME/artisans-marketplace)
-![License](https://img.shields.io/github/license/YOUR-USERNAME/artisans-marketplace)
+![GitHub repo size](https://img.shields.io/github/repo-size/kn9annihilator/artisans-marketplace)
+![GitHub stars](https://img.shields.io/github/stars/kn9annihilator/artisans-marketplace?style=social)
+![Last Commit](https://img.shields.io/github/last-commit/kn9annihilator/artisans-marketplace)
+![Issues](https://img.shields.io/github/issues/kn9annihilator/artisans-marketplace)
+![License](https://img.shields.io/github/license/kn9annihilator/artisans-marketplace)
 
 # Getting Started with Create React App
 
