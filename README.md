@@ -1,6 +1,13 @@
+![GitHub repo size](https://img.shields.io/github/repo-size/YOUR-USERNAME/artisans-marketplace)
+![GitHub stars](https://img.shields.io/github/stars/YOUR-USERNAME/artisans-marketplace?style=social)
+![Last Commit](https://img.shields.io/github/last-commit/YOUR-USERNAME/artisans-marketplace)
+![Issues](https://img.shields.io/github/issues/YOUR-USERNAME/artisans-marketplace)
+![License](https://img.shields.io/github/license/YOUR-USERNAME/artisans-marketplace)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
