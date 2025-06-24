@@ -2,7 +2,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/kn9annihilator/artisans-marketplace?style=social)
 ![Last Commit](https://img.shields.io/github/last-commit/kn9annihilator/artisans-marketplace)
 ![Issues](https://img.shields.io/github/issues/kn9annihilator/artisans-marketplace)
-![License](https://img.shields.io/github/license/kn9annihilator/artisans-marketplace)
+![LICENSE](https://img.shields.io/github/license/kn9annihilator/artisans-marketplace)
 
 # Getting Started with Create React App
 
