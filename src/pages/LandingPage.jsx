@@ -14,7 +14,7 @@ const LandingPage = () => {
         </h1>
         <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
           <Typewriter
-            words={['One Click at a Time', 'With Global Reach', 'With Local Heart']}
+            words={['Reach out to the people who want you', 'With Global Reach', 'With Local Heart']}
             loop={0}
             cursor
             cursorStyle={<span className="cursor-click">|</span>}

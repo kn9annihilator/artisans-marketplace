@@ -1,35 +1,27 @@
 // src/App.js
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-// Pages
 import LandingPage from './pages/LandingPage';
-import CustomerPage from './pages/CustomerPage'; // Create this file next
-import ProductDetail from './pages/ProductDetail';
+import CustomerPage from './pages/CustomerPage';
+import CartPage from './pages/CartPage';
+// import PaymentPage from './pages/PaymentPage'; // Not created yet
+// import Navbar from './components/Navbar'; // Not created yet
 
-
-
-
-// Optional future pages
-// import VendorRegister from './pages/VendorRegister';
-// import VendorLogin from './pages/VendorLogin';
-// import ProductDetails from './pages/ProductDetails';
-
-const App = () => {
+function App() {
   return (
     <Router>
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/customer" element={<CustomerPage />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
-        {/* Future routes (uncomment as you build) */}
-        {/* <Route path="/vendor/register" element={<VendorRegister />} /> */}
-        {/* <Route path="/vendor/login" element={<VendorLogin />} /> */}
-        {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
+        <Route path="/cart" element={<CartPage />} />
+        {/* <Route path="/payment" element={<PaymentPage />} /> */}
       </Routes>
     </Router>
   );
-};
+}
 
 export default App;
+
+
+
