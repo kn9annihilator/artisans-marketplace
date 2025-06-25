@@ -1,91 +1,111 @@
 // src/pages/LandingPage.jsx
-// badhiya sa landing page
+
 import React from 'react';
-import { Typewriter } from 'react-simple-typewriter';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import Typewriter from 'typewriter-effect';
+import { useNavigate } from 'react-router-dom';
+
+const scrollToSection = (id) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-neutral-900 text-white min-h-screen">
-      {/* Hero Section */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-6">
-        <h1 className="text-5xl sm:text-6xl font-extrabold text-orange-400 mb-4 drop-shadow-lg">
-          Empowering Local Artisans
-        </h1>
-        <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col justify-between font-sans">
+      {/* Top Navigation Bar */}
+      <div className="flex justify-between items-center px-8 py-4 bg-gray-950 shadow-md">
+        <h1 className="text-2xl font-bold text-orange-400 tracking-wide">LOCAL MARKET</h1>
+        <div className="space-x-4">
+          <button onClick={() => scrollToSection('about')} className="text-white hover:text-orange-400 transition">About Us</button>
+          <button onClick={() => scrollToSection('footer')} className="text-white hover:text-orange-400 transition">Contact</button>
+        </div>
+      </div>
+
+      {/* Header with typewriter and logins */}
+      <header className="text-center py-10">
+        <h1 className="text-5xl font-extrabold text-orange-400 mb-4">
           <Typewriter
-            words={['Reach out to the people who want you', 'With Global Reach', 'With Local Heart']}
-            loop={0}
-            cursor
-            cursorStyle={<span className="cursor-click">|</span>}
-            typeSpeed={80}
-            deleteSpeed={60}
-            delaySpeed={1200}
+            options={{
+              strings: ['Welcome to Local Market', 'Empowering Artisans, Enriching Lives', 'Nourish the Rich Culture'],
+              autoStart: true,
+              loop: true,
+            }}
           />
-        </h2>
-        <p className="text-gray-300 max-w-xl mb-8">
-          A student-built platform to bring rural talent to the online marketplace.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link
-            to="/customer"
-            className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl shadow-md transition duration-300"
+        </h1>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/customer')}
+          className="mt-6 px-10 py-3 text-lg font-semibold bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600"
+        >
+          Explore Marketplace
+        </motion.button>
+        <div className="flex justify-center gap-4 mt-6">
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/login-customer')}
+            className="px-6 py-2 border border-orange-400 rounded hover:bg-orange-400 hover:text-black"
           >
-            Explore Marketplace
-          </Link>
-          <Link
-            to="/vendor/register"
-            className="px-6 py-3 border border-orange-400 text-orange-400 hover:bg-orange-800 font-medium rounded-xl shadow-md transition duration-300"
+            Customer Login
+          </motion.button>
+
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/login-vendor')}
+            className="px-6 py-2 border border-orange-400 rounded hover:bg-orange-400 hover:text-black"
+          >
+            Vendor Login
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/register-vendor')}
+            className="px-8 py-3 bg-orange-500 text-white font-bold rounded-full shadow-lg hover:bg-orange-600"
           >
             Register as Vendor
-          </Link>
+          </motion.button>
         </div>
-      </section>
+      </header>
 
-      {/* About Section with Glassmorphism */}
-      <section className="relative w-full flex justify-center py-16 px-4">
-        <div className="backdrop-blur-lg bg-white/5 rounded-xl shadow-2xl p-10 max-w-4xl w-full border border-white/10">
-          <h3 className="text-3xl font-bold text-orange-300 mb-6 text-center">About Us</h3>
-          <p className="text-gray-300 text-center mb-6">
-            We are 2nd-year B.Tech Computer Science  students from <span className="font-semibold text-white">Sharda University</span>. This platform is a student innovation created to uplift India’s artisan community.
+      {/* Spacer */}
+      <div className="flex-1 py-32 px-6">
+        <p className="text-center text-lg text-gray-400 max-w-3xl mx-auto">
+          Explore handcrafted products by local artisans from all over the country. Our mission is to bridge the gap
+          between rural creators and urban markets, giving voice to talent that deserves recognition.
+        </p>
+      </div>
+
+      {/* About Section */}
+      <section id="about" className="bg-gray-800 text-white py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-6">About Us</h2>
+          <p className="mb-4 text-lg">
+            We are students of Sharda University, pursuing B.Tech in our 2nd year. This platform is a result of our
+            passion to build a bridge between skilled rural artisans and the digital marketplace.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-10">
-            <div className="text-center">
-              <p className="mt-3 text-lg font-medium">Krishna Narula</p>
-              <p className="text-sm text-gray-400">Founder</p>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-8">
+            <div className="bg-gray-700 p-6 rounded shadow-lg">
+              <h3 className="text-xl font-bold mb-2">Krishna Narula</h3>
+              <p>Founder</p>
             </div>
-            <div className="text-center">
-              <p className="mt-3 text-lg font-medium">Aman Ahmad Khan</p>
-              <p className="text-sm text-gray-400">Co-founder</p>
+            <div className="bg-gray-700 p-6 rounded shadow-lg">
+              <h3 className="text-xl font-bold mb-2">Aman Ahmad Khan</h3>
+              <p>Co-Founder</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section className="py-16 px-6 text-center">
-        <h3 className="text-3xl font-bold text-orange-300 mb-4">Our Vision</h3>
-        <p className="text-gray-300 max-w-3xl mx-auto text-lg">
-          To enable local craftsmen and women to reach customers across the globe by removing digital barriers and giving them a platform that is built for them.
-        </p>
-        <p className="text-gray-400 italic mt-4">
-          यह वेबसाइट ग्रामीण कारीगरों को ऑनलाइन सामान बेचने में मदद करने के लिए बनाई गई है।
-        </p>
-        <p className="text-gray-400 italic">
-          यहाँ आप अपने हाथ से बनाए गए उत्पाद बेच सकते हैं और ग्राहक सीधे आपसे खरीद सकते हैं।
-        </p>
-      </section>
-
-      {/* Contact Section */}
-      <section className="py-10 text-center">
-        <h3 className="text-3xl font-bold text-orange-300 mb-3">Contact Us</h3>
-        <p className="text-gray-200">📧 Email: <span className="text-white">public.contact.krishna@gmail.com</span></p>
-        <p className="text-gray-200">📞 Phone: <span className="text-white">+91 XXXXXXXXX</span></p>
-      </section>
-
-      {/* Footer */}
-      <footer className="text-sm text-center py-4 border-t border-gray-700 text-gray-500">
-        © 2025 Artisan Marketplace | Built by Krishna & Aman with ❤️
+      {/* Footer Section */}
+      <footer id="footer" className="bg-gray-900 text-gray-400 text-center py-6 border-t border-gray-700">
+        <p>Contact us: artisans.marketplace@gmail.com | Phone: +91-9876543210</p>
+        <p className="text-sm mt-2">© 2025 Local Market. All rights reserved.</p>
       </footer>
     </div>
   );

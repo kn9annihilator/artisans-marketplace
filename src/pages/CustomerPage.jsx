@@ -1,15 +1,16 @@
 // src/pages/CustomerPage.jsx
 
 import React, { useState, useEffect } from 'react';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart, Search, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
+import { Slider } from '@mui/material';
 
 const allProducts = [
-  { id: 1, name: 'Wooden Bowl', description: 'Handcrafted by artisans.', price: 299, image: '/images/wooden-bowl.jpg', category: 'Wooden' },
-  { id: 2, name: 'Copper Bottle', description: 'Ayurvedic copper water bottle.', price: 499, image: '/images/copper-bottle.jpg', category: 'Copper' },
-  { id: 3, name: 'Steel Tiffin', description: 'Durable steel lunch box.', price: 399, image: '/images/steel-tiffin.jpg', category: 'Steel' },
-  { id: 4, name: 'Glass Vase', description: 'Delicate hand-blown vase.', price: 250, image: '/images/glass-vase.jpg', category: 'Glass' },
+  { id: 1, name: 'Wooden Bowl', description: 'Handcrafted by artisans.', price: 299, image: '/images/wooden-bowl.jpg', category: 'Wooden', image: "/products/product1.jpg"},
+  { id: 2, name: 'Copper Bottle', description: 'Ayurvedic copper water bottle.', price: 499, image: '/images/copper-bottle.jpg', category: 'Copper', image: "/products/product2.jpg"},
+  { id: 3, name: 'Steel Tiffin', description: 'Durable steel lunch box.', price: 399, image: '/images/steel-tiffin.jpg', category: 'Steel', image: "/products/product3.jpg" },
+  { id: 4, name: 'Glass Vase', description: 'Delicate hand-blown vase.', price: 250, image: '/images/glass-vase.jpg', category: 'Glass', image: "/products/product14.jfif" },
   { id: 5, name: 'Aluminium Jug', description: 'Rust-proof jug for daily use.', price: 349, image: '/images/aluminium-jug.jpg', category: 'Aluminium' },
   { id: 6, name: 'Copper Cup Set', description: 'Set of 4 cups for gifting.', price: 599, image: '/images/copper-cups.jpg', category: 'Copper' },
   { id: 7, name: 'Steel Spoons', description: 'Elegant steel spoons.', price: 150, image: '/images/steel-spoons.jpg', category: 'Steel' },
@@ -76,7 +77,7 @@ const CustomerPage = () => {
   };
 
   const filteredProducts = allProducts.filter(p => {
-    const matchesSearch = p.name?.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = p.name?.toLowerCase().includes(search.toLowerCase()) || p.description?.toLowerCase().includes(search.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
     const matchesPrice = p.price >= priceRange[0] && p.price <= priceRange[1];
     return matchesSearch && matchesCategory && matchesPrice;
@@ -87,7 +88,7 @@ const CustomerPage = () => {
       <h1 className="text-4xl font-extrabold mb-6 text-center font-serif">
         <Typewriter
           options={{
-            strings: ['Explore Our Handpicked Products', 'Crafted by Local Artisans', 'Made with Love & Tradition'],
+            strings: ['Discover Unique Artisan Products', 'Handpicked and Beautifully Crafted', 'Support Local Artisans'],
             autoStart: true,
             loop: true,
           }}
@@ -95,13 +96,16 @@ const CustomerPage = () => {
       </h1>
 
       <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="border border-gray-300 rounded px-4 py-2 w-full md:w-1/3"
-        />
+        <div className="relative w-full md:w-1/3">
+          <input
+            type="text"
+            placeholder="Search by name or description..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full border border-gray-300 rounded px-4 py-2 pl-10"
+          />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+        </div>
 
         <select
           value={selectedCategory}
@@ -116,33 +120,28 @@ const CustomerPage = () => {
           <option>Aluminium</option>
         </select>
 
-        <div className="flex items-center gap-2">
-          <label>₹{priceRange[0]}</label>
-          <input
-            type="range"
-            min="0"
-            max="1000"
-            value={priceRange[0]}
-            onChange={e => setPriceRange([+e.target.value, priceRange[1]])}
+        <div className="w-full md:w-1/3">
+          <Slider
+            value={priceRange}
+            onChange={(e, newValue) => setPriceRange(newValue)}
+            valueLabelDisplay="auto"
+            min={0}
+            max={1000}
+            step={10}
           />
-          <input
-            type="range"
-            min="0"
-            max="1000"
-            value={priceRange[1]}
-            onChange={e => setPriceRange([priceRange[0], +e.target.value])}
-          />
-          <label>₹{priceRange[1]}</label>
+          <div className="text-sm text-center mt-1 text-gray-600">₹{priceRange[0]} – ₹{priceRange[1]}</div>
         </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredProducts.map(product => (
+          
           <motion.div
             key={product.id}
+            
             whileHover={{ scale: 1.03 }}
             className="bg-white rounded-lg shadow-md p-4 flex flex-col"
-          >
+          > 
             <img src={product.image} alt={product.name} className="h-40 w-full object-cover rounded mb-3" />
             <h2 className="text-lg font-bold">{product.name}</h2>
             <p className="text-sm text-gray-600 mb-2">{product.description}</p>
@@ -154,12 +153,13 @@ const CustomerPage = () => {
               >
                 <ShoppingCart size={16} /> Add to Cart
               </button>
-              <button
+              <motion.button
+                whileTap={{ scale: 1.4 }}
                 onClick={() => toggleLike(product.id)}
                 className={likes[product.id] ? 'text-red-500' : 'text-gray-400'}
               >
                 <Heart fill={likes[product.id] ? 'red' : 'none'} size={20} />
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         ))}
