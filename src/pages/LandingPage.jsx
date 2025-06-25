@@ -52,7 +52,7 @@ const LandingPage = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-10">
             <div className="text-center">
               <p className="mt-3 text-lg font-medium">Krishna Narula</p>
-              <p className="text-sm text-gray-400">Co-founder</p>
+              <p className="text-sm text-gray-400">Founder</p>
             </div>
             <div className="text-center">
               <p className="mt-3 text-lg font-medium">Aman Ahmad Khan</p>
