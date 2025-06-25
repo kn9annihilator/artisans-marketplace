@@ -1,5 +1,5 @@
 // src/pages/LandingPage.jsx
-
+// badhiya sa landing page
 import React from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import { Link } from 'react-router-dom';
