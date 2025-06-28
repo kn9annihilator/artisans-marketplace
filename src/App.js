@@ -6,6 +6,8 @@ import LandingPage from './pages/LandingPage';
 import CustomerPage from './pages/CustomerPage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
+import VendorRegister from './pages/VendorRegister';
+
 
 // import PaymentPage from './pages/PaymentPage'; // Not created yet
 // import Navbar from './components/Navbar'; // Not created yet
@@ -19,6 +21,8 @@ function App() {
         <Route path="/customer" element={<CustomerPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/register-vendor" element={<VendorRegister />} />
+
         {/* <Route path="/payment" element={<PaymentPage />} /> */}
       </Routes>
     </Router>
