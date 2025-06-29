@@ -102,9 +102,32 @@ const LandingPage = () => {
         </div>
       </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {/* Footer Section */}
       <footer id="footer" className="bg-gray-900 text-gray-400 text-center py-6 border-t border-gray-700">
-        <p>Contact us: artisans.marketplace@gmail.com | Phone: +91-9876543210</p>
+        <p>Contact us: public.contact.krishna@gmail.com | Phone: +91-XXXXXXXXXX</p>
         <p className="text-sm mt-2">© 2025 Local Market. All rights reserved.</p>
       </footer>
     </div>

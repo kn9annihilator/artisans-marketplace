@@ -7,6 +7,11 @@ import CustomerPage from './pages/CustomerPage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import VendorRegister from './pages/VendorRegister';
+import CustomerLogin from './pages/CustomerLogin';
+import VendorLogin from './pages/VendorLogin';
+
+
+
 
 
 // import PaymentPage from './pages/PaymentPage'; // Not created yet
@@ -22,6 +27,12 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/register-vendor" element={<VendorRegister />} />
+        <Route path="/login-customer" element={<CustomerLogin />} />
+        <Route path="/login-vendor" element={<VendorLogin />} />
+
+        
+
+
 
         {/* <Route path="/payment" element={<PaymentPage />} /> */}
       </Routes>
