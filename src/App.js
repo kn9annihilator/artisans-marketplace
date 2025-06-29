@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage';
 import VendorRegister from './pages/VendorRegister';
 import CustomerLogin from './pages/CustomerLogin';
 import VendorLogin from './pages/VendorLogin';
+import VendorDashboard from './pages/VendorDashboard';
+
 
 
 
@@ -29,6 +31,8 @@ function App() {
         <Route path="/register-vendor" element={<VendorRegister />} />
         <Route path="/login-customer" element={<CustomerLogin />} />
         <Route path="/login-vendor" element={<VendorLogin />} />
+        <Route path="/vendor-dashboard" element={<VendorDashboard />} />
+
 
         
 
