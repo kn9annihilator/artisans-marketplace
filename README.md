@@ -10,6 +10,20 @@
 
 ---
 
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Cloning and Installation](#cloning--installation)
+- [Navigate into the project directory](#navigate-into-the-project-directory)
+- [Install dependencies](#install-dependencies)
+- [Setting up Firebase](#firebase-setup-instructions)
+- [Running the Project Locally](#️-running-the-project-locally)
+- [⚠️OTP Limit Warning](#️-firebase-otp-limit-warning)
+- [Project Structure](#project-structure-overview)
+- [License](#license)
+
+
 ## Features
 -  **Vendor Registration with Mobile OTP (Firebase)**
 -  **Bilingual Labels (English + Hindi)**
@@ -135,6 +149,6 @@ See [LICENSE](#license) for more details.
 Author |
 Krishna Narula
 ## Connect with me
-[![LinkedIn](https://img.shields.io/badge/just%20the%20message-8A2BE2)](https://www.linkedin.com/in/krishnanarula/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Krishna%20Narula-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/krishnanarula/)
 
 
