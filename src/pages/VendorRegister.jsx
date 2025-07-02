@@ -1,13 +1,13 @@
 // src/pages/VendorRegistration.jsx
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
-import { app } from '../firebase'; // adjust path as needed
+import { auth } from '../firebase';
 
-const auth = getAuth(app);
 
-const indianStates = { 
+const indianStates = 
+{ 
    "Uttar Pradesh": [
   "Agra",
   "Aligarh",
@@ -270,97 +270,113 @@ const indianStates = {
   "Kot Kapura",
   "Kot‑kapura",
   "Chandigarh"]
-};
+ };
 
-const VendorRegistration = () => 
- {
-  const [formData, setFormData] = useState({ name: '', mobile: '', shopName: '', address: '', state: '', city: '' });
-   const [otp, setOtp] = useState('');
+ const VendorRegistration = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile: '',
+    shopName: '',
+    address: '',
+    state: '',
+    city: '',
+  });
+
   const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState('');
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [isHuman, setIsHuman] = useState(false);
+  const recaptchaContainerRef = useRef(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSendOtp = async () => {
-    if (!formData.mobile.match(/^[0-9]{10}$/)) {
-      setErrorMsg('❌ Invalid Mobile Number');
-      return;
-    }
-  }
-
-   useEffect(() => {
+  useEffect(() => {
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
         size: 'invisible',
-        callback: (response) => {
-          console.log("✅ reCAPTCHA Solved");
-        },
-        'expired-callback': () => {
-          setErrorMsg('⚠️ reCAPTCHA expired. Please refresh the page.');
-        }
+        callback: () => console.log('Recaptcha Solved'),
+        'expired-callback': () => setErrorMsg('Recaptcha expired. Please refresh.')
       }, auth);
 
       window.recaptchaVerifier.render().catch((err) => {
-        console.error("reCAPTCHA render failed:", err);
-        setErrorMsg('❌ reCAPTCHA could not render. Refresh the page.');
+        console.error("Recaptcha render error:", err);
+        setErrorMsg('Recaptcha render error. Please refresh.');
       });
     }
-  }, []); 
+  }, []);
 
-const handleVerifyOtp = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSendOtp = (e) => {
     e.preventDefault();
     setErrorMsg('');
-    setSuccessMsg('');
 
-    if (!otp || otp.length !== 6) {
-      setErrorMsg('❌ Enter a valid 6-digit OTP.');
+    if (!isHuman) {
+      setErrorMsg('❌ Please verify you are human.');
       return;
     }
+
+    const phoneNumber = `+91${formData.mobile}`;
+    const appVerifier = window.recaptchaVerifier;
+
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((confirmation) => {
+        setConfirmationResult(confirmation);
+        setOtpSent(true);
+        setSuccessMsg('✅ OTP sent successfully.');
+      })
+      .catch((error) => {
+        console.error("OTP send error:", error);
+        setErrorMsg('Failed to send OTP. Please try again.');
+      });
+  };
+
+  const handleVerifyOtp = (e) => {
+    e.preventDefault();
+    if (!otp || !confirmationResult) return;
 
     confirmationResult.confirm(otp)
       .then((result) => {
         setSuccessMsg('✅ Vendor Registered Successfully!');
-        console.log("Form Submitted:", formData);
         setErrorMsg('');
+        console.log('Vendor Data:', formData);
       })
       .catch((error) => {
-        console.error("OTP verification failed:", error);
-        setErrorMsg('❌ Incorrect OTP. Try again.');
+        setErrorMsg('❌ Incorrect OTP.');
+        console.error(error);
       });
   };
 
-
   return (
-    <div className="min-h-screen flex justify-center items-center bg-orange-50 px-4">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-orange-50 to-orange-100 px-4">
       <motion.form
-        onSubmit={(e) => {otpSent ? handleVerifyOtp() : handleSendOtp(); }}
+        onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md space-y-6 border border-orange-200"
+        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md space-y-6 border border-orange-200"
       >
         <h2 className="text-2xl font-bold text-center text-orange-600">Vendor Registration / विक्रेता पंजीकरण</h2>
 
-        {[{ label: 'Full Name / पूरा नाम *', name: 'name' },
-          { label: 'Mobile Number / मोबाइल नंबर *', name: 'mobile', type: 'tel' },
-          { label: 'Shop Name / दुकान का नाम *', name: 'shopName' },
-          { label: 'Address / पता *', name: 'address' }].map(({ label, name, type = 'text' }) => (
-            <div key={name}>
-              <label className="block text-sm font-semibold mb-1">{label}</label>
-              <input
-                type={type}
-                name={name}
-                required
-                value={formData[name]}
-                onChange={handleChange}
-                className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-orange-400"
-              />
-            </div>
+        {['name', 'mobile', 'shopName', 'address'].map((field) => (
+          <div key={field}>
+            <label className="block text-sm font-semibold mb-1">
+              {field === 'name' && 'Full Name / पूरा नाम *'}
+              {field === 'mobile' && 'Mobile Number / मोबाइल नंबर *'}
+              {field === 'shopName' && 'Shop Name / दुकान का नाम *'}
+              {field === 'address' && 'Address / पता *'}
+            </label>
+            <input
+              type={field === 'mobile' ? 'tel' : 'text'}
+              name={field}
+              required
+              pattern={field === 'mobile' ? '[0-9]{10}' : undefined}
+              onChange={handleChange}
+              className="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:outline-orange-400"
+            />
+          </div>
         ))}
 
         <div>
@@ -368,8 +384,11 @@ const handleVerifyOtp = (e) => {
           <select
             name="state"
             required
-            onChange={(e) => { handleChange(e); setFormData((prev) => ({ ...prev, city: '' })); }}
-            className="w-full border px-4 py-2 rounded-lg bg-white"
+            onChange={(e) => {
+              handleChange(e);
+              setFormData((prev) => ({ ...prev, city: '' }));
+            }}
+            className="w-full border px-4 py-2 rounded-lg bg-white shadow-sm"
           >
             <option value="">Select State / राज्य चुनें</option>
             {Object.keys(indianStates).map((state) => (
@@ -386,7 +405,7 @@ const handleVerifyOtp = (e) => {
             value={formData.city}
             onChange={handleChange}
             disabled={!formData.state}
-            className="w-full border px-4 py-2 rounded-lg bg-white"
+            className="w-full border px-4 py-2 rounded-lg bg-white shadow-sm"
           >
             <option value="">Select City / शहर चुनें</option>
             {formData.state && indianStates[formData.state].map((city) => (
@@ -395,6 +414,19 @@ const handleVerifyOtp = (e) => {
           </select>
         </div>
 
+        {!otpSent && (
+          <motion.div
+            whileTap={{ scale: 1.05 }}
+            onClick={() => setIsHuman(!isHuman)}
+            className={`w-full flex items-center justify-center border-2 rounded-lg px-4 py-3 mt-2 cursor-pointer transition-all duration-300 ${isHuman ? 'border-green-500 bg-green-100' : 'border-gray-300 bg-gray-50'}`}
+          >
+            <p className="text-sm font-medium text-gray-700 text-center">
+              {isHuman ? '✅ Verified as Human / सत्यापित उपयोगकर्ता' : '🔒 Click to verify you are human / मानव सत्यापन हेतु क्लिक करें'}<br />
+              <span className="text-xs text-gray-500">(यह सुनिश्चित करता है कि आप असली उपयोगकर्ता हैं)</span>
+            </p>
+          </motion.div>
+        )}
+
         {otpSent && (
           <div>
             <label className="block text-sm font-semibold mb-1">OTP / ओटीपी</label>
@@ -402,22 +434,23 @@ const handleVerifyOtp = (e) => {
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="w-full border px-4 py-2 rounded-lg"
+              className="w-full border px-4 py-2 rounded-lg shadow-sm"
               placeholder="Enter OTP"
               required
             />
           </div>
         )}
 
-        <div id="recaptcha-container"></div>
+        <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
 
-        {errorMsg && <p className="text-red-600 text-sm mt-1 text-center">{errorMsg}</p>}
+        {errorMsg && <p className="text-red-600 text-sm mt-1">{errorMsg}</p>}
+        {successMsg && <p className="text-green-600 text-sm mt-1">{successMsg}</p>}
 
         <motion.button
           type="submit"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="w-full py-2 px-4 text-white font-semibold rounded-xl transition duration-300 bg-orange-500 hover:bg-orange-600"
+          className={`w-full py-2 px-4 text-white font-semibold rounded-xl transition duration-300 ${isHuman || otpSent ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400 cursor-not-allowed'}`}
         >
           {otpSent ? 'Verify OTP / ओटीपी सत्यापित करें' : 'Send OTP / ओटीपी भेजें'}
         </motion.button>
@@ -425,5 +458,5 @@ const handleVerifyOtp = (e) => {
     </div>
   );
 };
-export default VendorRegistration;
 
+export default VendorRegistration;
