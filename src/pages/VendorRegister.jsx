@@ -272,13 +272,14 @@ const indianStates = {
   "Chandigarh"]
 };
 
-const VendorRegistration = () => {
+const VendorRegistration = () => 
+ {
   const [formData, setFormData] = useState({ name: '', mobile: '', shopName: '', address: '', state: '', city: '' });
-  const [otp, setOtp] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
+   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const [confirmationResult, setConfirmationResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -290,49 +291,54 @@ const VendorRegistration = () => {
       setErrorMsg('❌ Invalid Mobile Number');
       return;
     }
+  }
 
-    try {
-      if (!window.recaptchaVerifier) {
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-          size: 'invisible',
-          callback: () => {},
-          'expired-callback': () => setErrorMsg('❌ Captcha expired. Try again.')
-        }, auth);
-        await window.recaptchaVerifier.render();
-      }
+   useEffect(() => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+        callback: (response) => {
+          console.log("✅ reCAPTCHA Solved");
+        },
+        'expired-callback': () => {
+          setErrorMsg('⚠️ reCAPTCHA expired. Please refresh the page.');
+        }
+      }, auth);
 
-      const phoneNumber = '+91' + formData.mobile;
-      const appVerifier = window.recaptchaVerifier;
-
-      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-      setConfirmationResult(confirmation);
-      setOtpSent(true);
-      setErrorMsg('✅ OTP Sent Successfully');
-    } catch (error) {
-      console.error(error);
-      setErrorMsg('❌ Failed to send OTP');
+      window.recaptchaVerifier.render().catch((err) => {
+        console.error("reCAPTCHA render failed:", err);
+        setErrorMsg('❌ reCAPTCHA could not render. Refresh the page.');
+      });
     }
-  };
+  }, []); 
 
-  const handleVerifyOtp = async () => {
+const handleVerifyOtp = (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+    setSuccessMsg('');
+
     if (!otp || otp.length !== 6) {
-      setErrorMsg('❌ Enter a valid 6-digit OTP');
+      setErrorMsg('❌ Enter a valid 6-digit OTP.');
       return;
     }
-    try {
-      await confirmationResult.confirm(otp);
-      alert('✅ Vendor Registered Successfully!');
-      console.log(formData);
-    } catch (error) {
-      console.error(error);
-      setErrorMsg('❌ Incorrect OTP');
-    }
+
+    confirmationResult.confirm(otp)
+      .then((result) => {
+        setSuccessMsg('✅ Vendor Registered Successfully!');
+        console.log("Form Submitted:", formData);
+        setErrorMsg('');
+      })
+      .catch((error) => {
+        console.error("OTP verification failed:", error);
+        setErrorMsg('❌ Incorrect OTP. Try again.');
+      });
   };
+
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-orange-50 px-4">
       <motion.form
-        onSubmit={(e) => { e.preventDefault(); otpSent ? handleVerifyOtp() : handleSendOtp(); }}
+        onSubmit={(e) => {otpSent ? handleVerifyOtp() : handleSendOtp(); }}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -419,5 +425,5 @@ const VendorRegistration = () => {
     </div>
   );
 };
-
 export default VendorRegistration;
+
