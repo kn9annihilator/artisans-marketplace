@@ -361,6 +361,64 @@ const indianStates =
   "Kurukshetra",
   "Fatehabad",
   "Mahendragarh"
+],
+"Goa": [
+  "Panaji",
+  "Margao",
+  "Vasco da Gama",
+  "Mapusa",
+  "Ponda",
+  "Bicholim",
+  "Curchorem",
+  "Sanquelim",
+  "Canacona",
+  "Valpoi"
+],
+
+"Gujarat": [
+  "Ahmedabad",
+  "Surat",
+  "Vadodara",
+  "Rajkot",
+  "Bhavnagar",
+  "Jamnagar",
+  "Gandhinagar",
+  "Junagadh",
+  "Gandhidham",
+  "Nadiad",
+  "Mehsana",
+  "Bharuch",
+  "Anand",
+  "Navsari",
+  "Surendranagar",
+  "Morbi",
+  "Valsad",
+  "Vapi",
+  "Patan",
+  "Porbandar"
+],
+
+"Himachal Pradesh": [
+  "Shimla",
+  "Mandi",
+  "Dharamshala",
+  "Solan",
+  "Kullu",
+  "Hamirpur",
+  "Bilaspur",
+  "Chamba",
+  "Una",
+  "Nahan",
+  "Kangra",
+  "Sundernagar",
+  "Palampur",
+  "Nalagarh",
+  "Paonta Sahib",
+  "Baddi",
+  "Rampur",
+  "Reckong Peo",
+  "Keylong",
+  "Rohru"
 ]
 
  };
