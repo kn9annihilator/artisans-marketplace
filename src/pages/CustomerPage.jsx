@@ -46,7 +46,18 @@ const allProducts = [
   { id: 37, name: "Brocade Table Runner", description : "Luxurious handloom table runner.", "price": 620, "image": "/images/brocade-runner.jpg", category: "Textile" },
   { id: 38, name: "Ceramic Cookie Jar", description : "Hand-painted ceramic storage jar.", "price": 470, "image": "/images/ceramic-cookie-jar.jpg", category: "Ceramic" },
   { id: 39, name: "Brass Wall Hook", description : "Decorative brass coat hook.", "price": 170, "image": "/images/brass-hook.jpg", category: "Brass" },
-  { id: 40, name: "Leather Journal", description : "Hand-bound leather journal with blank pages.", "price": 580, "image": "/images/leather-journal.jpg", category: "Leather" }
+  { id: 40, name: "Leather Journal", description : "Hand-bound leather journal with blank pages.", "price": 580, "image": "/images/leather-journal.jpg", category: "Leather" },
+  { id: 41, name: "Ceramic Mug", description: "Hand-thrown ceramic mug with a speckled glaze finish.", price: 320, image: "/images/ceramic-mug.jpg", category: "Ceramics" },
+  { id: 42, name: "Woven Basket", description: "Handwoven natural fiber basket perfect for storage or décor.", price: 450, image: "/images/woven-basket.jpg", category: "Home Decor" },
+  { id: 43, name: "Beaded Necklace", description: "Intricately beaded necklace made with semi-precious stones.", price: 670, image: "/images/beaded-necklace.jpg", category: "Jewelry" },
+  { id: 44, name: "Wooden Cutting Board", description: "Handcrafted walnut cutting board with smooth finish.", price: 520, image: "/images/wooden-cutting-board.jpg", category: "Woodwork" },
+  { id: 45, name: "Hand-dyed Scarf", description: "Silk scarf dyed with natural botanical pigments.", price: 390, image: "/images/hand-dyed-scarf.jpg", category: "Textiles" },
+  { id: 46, name: "Macrame Wall Hanging", description: "Boho-style macrame wall art made with cotton rope.", price: 610, image: "/images/macrame-wall-hanging.jpg", category: "Home Decor" },
+  { id: 47, name: "Clay Plant Pot", description: "Terracotta plant pot with hand-painted patterns.", price: 280, image: "/images/clay-plant-pot.jpg", category: "Ceramics" },
+  { id: 48, name: "Hand-poured Candle", description: "Soy wax candle with lavender essential oil scent.", price: 330, image: "/images/hand-poured-candle.jpg", category: "Home Fragrance" },
+  { id: 49, name: "Leather Wallet", description: "Slim leather wallet with multiple card slots.", price: 490, image: "/images/leather-wallet.jpg", category: "Leather" },
+  { id: 50, name: "Embroidered Pouch", description: "Colorful hand-embroidered pouch with zipper.", price: 310, image: "/images/embroidered-pouch.jpg", category: "Textiles" }
+
 
   // Add more products ensuring name, price, image, and category are defined
 ];
